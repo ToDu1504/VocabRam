@@ -1,0 +1,22 @@
+@base = http://localhost:4000/api/v1
+
+### Levels with progress
+GET {{base}}/levels
+
+### Units of a level
+GET {{base}}/levels/A1/units
+
+### Words of a unit
+GET {{base}}/units/1/words
+
+### Answer a word
+POST {{base}}/words/1/answer
+Content-Type: application/json
+
+{ "result": "correct", "hintsUsed": 1 }
+
+### Validation error
+POST {{base}}/words/1/answer
+Content-Type: application/json
+
+{ "result": "maybe" }

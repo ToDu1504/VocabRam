@@ -1,0 +1,110 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int                @id @default(autoincrement())
+  name         String
+  email        String?            @unique
+  passwordHash String?
+  createdAt    DateTime           @default(now())
+  progress     UserWordProgress[]
+  sessions     ReviewSession[]
+}
+
+model Level {
+  id    Int    @id @default(autoincrement())
+  code  String @unique
+  name  String
+  order Int
+  units Unit[]
+}
+
+model Unit {
+  id      Int    @id @default(autoincrement())
+  levelId Int
+  number  Int
+  level   Level  @relation(fields: [levelId], references: [id])
+  words   Word[]
+
+  @@unique([levelId, number])
+}
+
+model Word {
+  id           Int                @id @default(autoincrement())
+  unitId       Int
+  position     Int
+  word         String
+  pos          String
+  sense        String             @default("") // "money"/"river", "homonym 1", or ""
+  variants     Json?
+  meaningVi    String
+  definitionEn String             @db.Text
+  definitionVi String             @db.Text
+  exampleEn    String             @db.Text // contains {{...}}
+  exampleVi    String             @db.Text
+  ipa          String?
+  audioUrl     String?
+  imageUrl     String?
+  imagePrompt  String?            @db.Text
+  unit         Unit               @relation(fields: [unitId], references: [id])
+  progress     UserWordProgress[]
+
+  @@unique([word, pos, sense])
+  @@unique([unitId, position])
+}
+
+enum ProgressStatus {
+  NEW
+  LEARNING
+  LEARNED
+}
+
+model UserWordProgress {
+  userId         Int
+  wordId         Int
+  status         ProgressStatus @default(NEW)
+  correctCount   Int            @default(0)
+  wrongCount     Int            @default(0)
+  hintCount      Int            @default(0)
+  lastReviewedAt DateTime?
+  user           User           @relation(fields: [userId], references: [id])
+  word           Word           @relation(fields: [wordId], references: [id])
+
+  @@id([userId, wordId])
+  @@index([userId, status])
+}
+
+enum ReviewMode {
+  UNIT
+  ALL
+  LEVEL
+}
+
+enum SessionStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
+model ReviewSession {
+  id           Int           @id @default(autoincrement())
+  userId       Int
+  mode         ReviewMode
+  levelId      Int?
+  unitId       Int?
+  wordOrder    Json
+  currentIndex Int           @default(0)
+  wrongWordIds Json
+  phase        String        @default("MAIN")
+  status       SessionStatus @default(IN_PROGRESS)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  user         User          @relation(fields: [userId], references: [id])
+
+  @@index([userId, mode, status])
+}

@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+.env.local
+__pycache__/
+*.pyc
+# Oxford PDFs are copyrighted (plan §5.7) — keep them local only
+data/raw/
