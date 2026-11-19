@@ -2,21 +2,45 @@
 
 > Nạp từ vựng, nhớ như RAM.
 
-Web học từ vựng tiếng Anh theo danh sách Oxford 3000/5000: Level (A1–C1) → Unit (22 từ) → thẻ học.
+Web học từ vựng tiếng Anh theo danh sách Oxford 3000/5000 (American): Level A1–C1 → Unit 22 từ → thẻ học, có hint, phát âm và 3 chế độ ôn (unit, tổng hợp, hoàn thành level).
 
-Kế hoạch chi tiết: [VocabRAM-PLAN.md](VocabRAM-PLAN.md).
+## Yêu cầu
 
-## Backend
+- Node.js 20+
+- MySQL 8 đang chạy
 
-```
+## Chạy
+
+```bash
+# 1. Backend — API ở http://localhost:4000/api/v1
 cd backend
 npm install
-cp .env.example .env   # sửa DATABASE_URL
-npx prisma migrate dev
-npm run db:seed
-npm run dev            # http://localhost:4000/api/v1
+cp .env.example .env          # sửa DATABASE_URL cho MySQL của bạn
+npx prisma migrate dev        # tạo database + bảng
+npm run db:seed               # nạp 5918 thẻ từ data/content/*.json
+npm run dev
+
+# 2. Frontend — http://localhost:3000 (terminal khác)
+cd frontend
+npm install
+cp .env.local.example .env.local
+npm run dev
 ```
 
-## Data pipeline (Python + pymupdf)
+`npm run db:seed` chạy lại được bất cứ lúc nào: nội dung được cập nhật, tiến độ học giữ nguyên.
 
-Xem `scripts/` và CLAUDE.md.
+## Phím tắt khi học
+
+| Phím | Tác dụng |
+|---|---|
+| Enter | Kiểm tra / sang thẻ tiếp |
+| Esc | Don't know |
+| Ctrl+H | Hint |
+
+## Cấu trúc
+
+- `backend/` — Express 5 + TypeScript + Prisma (MySQL)
+- `frontend/` — Next.js 16 + Tailwind CSS 4
+- `data/content/` — nội dung từ vựng theo level (JSON)
+
+Danh sách từ thuộc bản quyền Oxford University Press; định nghĩa và ví dụ được viết riêng. Chỉ dùng cho học cá nhân.

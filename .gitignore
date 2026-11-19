@@ -6,3 +6,12 @@ __pycache__/
 *.pyc
 # Oxford PDFs are copyrighted (plan §5.7) — keep them local only
 data/raw/
+
+# Only what the app needs to run is tracked (README.md is the only doc)
+*.md
+!/README.md
+# Content pipeline sources (the app only needs data/content/<LEVEL>.json)
+scripts/
+data/parsed/
+data/content/_*.tsv
+backend/api.http
