@@ -613,14 +613,14 @@ export function currentUser(req: Request, _res: Response, next: NextFunction) {
 ## 11. Lộ trình thực hiện
 
 > **📌 Tiến độ (cập nhật 2026-11-19)**
-> - Dữ liệu: A1 (1077 từ/49 unit), A2 (992/45), B1 (903/41) **đã đủ nội dung** → `data/content/A1|A2|B1.json`. B2, C1 chưa làm.
+> - Dữ liệu: A1 (1077 từ/49 unit), A2 (992/45), B1 (903/41), B2 (1550/71), C1 (1396/64) **đã đủ nội dung** (5918 thẻ) → `data/content/<LEVEL>.json`, đã seed vào DB.
 > - Nguồn nội dung: `data/content/_<LEVEL>_*.tsv` (sửa ở đây rồi build lại, không sửa JSON tay).
 > - Quy trình: `python scripts/unit_words.py <LV> <từ> <đến>` → viết TSV → `python scripts/check_content.py <LV>` → `python scripts/build_content.py <LV>`.
 > - Cách làm B2/C1: Sonnet viết song song (6 unit/agent), Opus kiểm tra. Lỗi hay gặp: dùng nghĩa Anh-Anh thay vì Anh-Mỹ, chọn nhầm homonym, che `{{cell}}s` thay vì `{{cells}}`.
 > - **Đã chốt (2026-11-19):** (a) unit cuối < 6 từ gộp vào unit trước (`MIN_LAST` trong `build_units.py`) → A2 U45 = 24 từ, B1 U41 = 23 từ. (b) `Word` có cột `sense` (= `note` trong TSV), khoá `@@unique([word, pos, sense])`.
 > - **Backend (Giai đoạn 1) xong 2026-11-19:** `backend/` Express 5 + Prisma 6 + MySQL (`root` không mật khẩu, DB `vocabram`), seed A1–B1, 4 API học chạy được (`backend/api.http`).
 > - **Giai đoạn 2–4 xong 2026-11-19:** `frontend/` Next.js 16 + Tailwind 4 (học unit, hint, phát âm, phím tắt, 3 chế độ ôn); backend thêm `/reviews`. Chế độ LEVEL hiện **không** bắt học hết level trước (§12 #2).
-> - **Việc tiếp theo:** Giai đoạn 5 — nội dung B2/C1, `fetch-audio`, ảnh OpenMoji.
+> - **Việc tiếp theo:** Giai đoạn 5 còn `fetch-audio`, ảnh OpenMoji; rồi Giai đoạn 6 (dùng thử). Ghi chú: `diplomatic` bị parse thành noun (nên là adj).
 
 ### Giai đoạn 0 — Dữ liệu mẫu
 - [x] Tải 2 file PDF Oxford vào `data/raw/`
@@ -662,7 +662,7 @@ export function currentUser(req: Request, _res: Response, next: NextFunction) {
 - [x] Hiện "Tiếp tục ôn" trên Dashboard
 
 ### Giai đoạn 5 — Dữ liệu đầy đủ & ảnh
-- [ ] Sinh nội dung toàn bộ A1 → C1 (theo đợt) — ✅ A1, A2, B1 xong (2972 từ, kiểm tra bằng `scripts/check_content.py`); còn B2, C1
+- [x] Sinh nội dung toàn bộ A1 → C1 (theo đợt) — 5918 thẻ, kiểm tra bằng `scripts/check_content.py`
 - [ ] `fetch-audio.ts`: IPA + audio từ Free Dictionary API, đối chiếu IPA
 - [ ] Ảnh MVP: OpenMoji cho từ cụ thể + ảnh mặc định 🐏
 - [ ] (Tùy chọn) `generate-images.ts`: Gemini, chạy tiếp được khi lỗi giữa chừng
