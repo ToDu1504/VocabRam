@@ -15,3 +15,6 @@ scripts/
 data/parsed/
 data/content/_*.tsv
 backend/api.http
+
+# Vocabulary data stays local
+data/
