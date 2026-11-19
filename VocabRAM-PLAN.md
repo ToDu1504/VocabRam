@@ -619,7 +619,8 @@ export function currentUser(req: Request, _res: Response, next: NextFunction) {
 > - Cách làm B2/C1: Sonnet viết song song (6 unit/agent), Opus kiểm tra. Lỗi hay gặp: dùng nghĩa Anh-Anh thay vì Anh-Mỹ, chọn nhầm homonym, che `{{cell}}s` thay vì `{{cells}}`.
 > - **Đã chốt (2026-11-19):** (a) unit cuối < 6 từ gộp vào unit trước (`MIN_LAST` trong `build_units.py`) → A2 U45 = 24 từ, B1 U41 = 23 từ. (b) `Word` có cột `sense` (= `note` trong TSV), khoá `@@unique([word, pos, sense])`.
 > - **Backend (Giai đoạn 1) xong 2026-11-19:** `backend/` Express 5 + Prisma 6 + MySQL (`root` không mật khẩu, DB `vocabram`), seed A1–B1, 4 API học chạy được (`backend/api.http`).
-> - **Việc tiếp theo:** Giai đoạn 2 (frontend Next.js). B2/C1 làm sau.
+> - **Giai đoạn 2–4 xong 2026-11-19:** `frontend/` Next.js 16 + Tailwind 4 (học unit, hint, phát âm, phím tắt, 3 chế độ ôn); backend thêm `/reviews`. Chế độ LEVEL hiện **không** bắt học hết level trước (§12 #2).
+> - **Việc tiếp theo:** Giai đoạn 5 — nội dung B2/C1, `fetch-audio`, ảnh OpenMoji.
 
 ### Giai đoạn 0 — Dữ liệu mẫu
 - [x] Tải 2 file PDF Oxford vào `data/raw/`
@@ -638,27 +639,27 @@ export function currentUser(req: Request, _res: Response, next: NextFunction) {
 - [x] Test API bằng Postman / Thunder Client / file `.http`
 
 ### Giai đoạn 2 — Giao diện học
-- [ ] Khởi tạo `frontend/`: Next.js + TS + Tailwind
-- [ ] `lib/api.ts` + `types/`
-- [ ] Dashboard
-- [ ] Trang danh sách unit (giống ảnh 1)
-- [ ] `WordCard` + `MaskedSentence` + `AnswerInput` (giống ảnh 2)
-- [ ] `useLearningQueue` (đúng → bỏ ra, Don't Know → xuống cuối)
-- [ ] `ResultScreen` khi xong unit
-- [ ] Cập nhật ✓ xanh trên danh sách unit
+- [x] Khởi tạo `frontend/`: Next.js + TS + Tailwind
+- [x] `lib/api.ts` + `types/`
+- [x] Dashboard
+- [x] Trang danh sách unit (giống ảnh 1)
+- [x] `WordCard` + `MaskedSentence` + `AnswerInput` (giống ảnh 2)
+- [x] `useLearningQueue` (đúng → bỏ ra, Don't Know → xuống cuối)
+- [x] `ResultScreen` khi xong unit
+- [x] Cập nhật ✓ xanh trên danh sách unit
 
 ### Giai đoạn 3 — Hint & phát âm
-- [ ] `useHint`: mở từng chữ, giới hạn `floor(n/2)`, hint cuối phát âm
-- [ ] `useSpeech`: audio thật → fallback Web Speech API
-- [ ] Hiện IPA + 🔊 sau khi trả lời
-- [ ] Phím tắt
+- [x] `useHint`: mở từng chữ, giới hạn `floor(n/2)`, hint cuối phát âm
+- [x] `useSpeech`: audio thật → fallback Web Speech API
+- [x] Hiện IPA + 🔊 sau khi trả lời
+- [x] Phím tắt
 
 ### Giai đoạn 4 — 3 chế độ ôn
-- [ ] Bảng `ReviewSession` + `review.service.ts`
-- [ ] Chế độ UNIT
-- [ ] Chế độ ALL (ưu tiên từ hay sai / lâu chưa ôn)
-- [ ] Chế độ LEVEL (không lặp, lưu tiến độ, RETRY_WRONG cuối)
-- [ ] Hiện "Tiếp tục ôn" trên Dashboard
+- [x] Bảng `ReviewSession` + `review.service.ts`
+- [x] Chế độ UNIT
+- [x] Chế độ ALL (ưu tiên từ hay sai / lâu chưa ôn)
+- [x] Chế độ LEVEL (không lặp, lưu tiến độ, RETRY_WRONG cuối)
+- [x] Hiện "Tiếp tục ôn" trên Dashboard
 
 ### Giai đoạn 5 — Dữ liệu đầy đủ & ảnh
 - [ ] Sinh nội dung toàn bộ A1 → C1 (theo đợt) — ✅ A1, A2, B1 xong (2972 từ, kiểm tra bằng `scripts/check_content.py`); còn B2, C1

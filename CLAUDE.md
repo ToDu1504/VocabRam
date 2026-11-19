@@ -12,7 +12,7 @@ Claude writes all code: the app (backend/frontend), the data pipeline, and vocab
 
 ## Current state
 
-`backend/` (Express 5 + Prisma 6 + MySQL, Phase 1) is done: run `npm run dev` in `backend/` (port 4000); `npm run db:seed` re-imports `data/content/*.json` (idempotent upsert by `(word, pos, sense)`). `frontend/` (Next.js) is not created yet. Git remote: github.com/ToDu1504/VocabRam (branch `main`). `data/raw/` (Oxford PDFs) is gitignored for copyright.
+`backend/` (Express 5 + Prisma 6 + MySQL, Phase 1) is done: run `npm run dev` in `backend/` (port 4000); `npm run db:seed` re-imports `data/content/*.json` (idempotent upsert by `(word, pos, sense)`). `frontend/` (Next.js 16 + Tailwind 4, phases 2–4) is done: `npm run dev` in `frontend/` (port 3000). Next 16 differs from older versions — read `frontend/node_modules/next/dist/docs/` before changing it; client pages using `useParams`/`usePathname` must sit under `<Suspense>` (cacheComponents is on). Git remote: github.com/ToDu1504/VocabRam (branch `main`). `data/raw/` (Oxford PDFs) is gitignored for copyright.
 
 ## Data pipeline (Python, needs `pymupdf`)
 

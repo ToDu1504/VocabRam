@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0b1220;
+  --color-panel: #121a2b;
+  --color-panel-2: #172238;
+  --color-line: #26324b;
+  --color-fg: #e5e9f0;
+  --color-muted: #9aa6bd;
+  --color-accent: #3b82f6;
+  --color-success: #22c55e;
+  --color-danger: #f87171;
+  --color-hint: #f59e0b;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --animate-shake: shake 0.35s ease-in-out;
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex min-h-11 items-center justify-center gap-2 rounded-lg px-5 py-2.5 font-semibold transition-colors disabled:cursor-not-allowed;
+  }
+  .label {
+    @apply mb-1 text-xs font-semibold tracking-wider text-muted uppercase;
+  }
+}

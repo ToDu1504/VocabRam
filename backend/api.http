@@ -20,3 +20,21 @@ POST {{base}}/words/1/answer
 Content-Type: application/json
 
 { "result": "maybe" }
+
+### Active reviews
+GET {{base}}/reviews/active
+
+### Start (or resume) a review: UNIT | LEVEL | ALL
+POST {{base}}/reviews
+Content-Type: application/json
+
+{ "mode": "UNIT", "unitId": 1 }
+
+### Review state
+GET {{base}}/reviews/1
+
+### Answer the current word of a review
+POST {{base}}/reviews/1/answer
+Content-Type: application/json
+
+{ "wordId": 1, "result": "correct", "hintsUsed": 0 }
